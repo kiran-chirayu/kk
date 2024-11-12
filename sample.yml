@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  connection: local
+  become: true
+  tasks:
+  - name: Update and upgrade apt packages
+    apt:
+      upgrade: yes
+      update_cache: yes
+  - name: Install Apache
+    package: name=apache2 state=present
+  - name: Deploy Static Webpage
+    copy: src=index.html dest=/var/www/html
+  - name: Start Apache
+    service: name=apache2 state=started
